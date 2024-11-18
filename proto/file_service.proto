@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package file_service;
+
+message FileInfo {
+    string file_name = 1;
+    optional int64 file_size = 2;
+    optional int64 creat_time = 3;
+    optional string path = 4;
+    optional string owner = 5;
+    optional string group = 6;
+    bool is_dir = 7;
+    FileInfo parent = 8;
+    repeated FileInfo children = 9;
+    repeated string permissions = 10;
+    repeated string locations = 11;
+    repeated int32 status = 12;
+}
+
+message File{
+    FileInfo file_info = 1;
+    bytes content = 2;
+}
+
+service FileService {
+    rpc GetFile (FileInfo) returns (File) {}
+    rpc PutFile (File) returns (FileInfo) {}
+    rpc ListFiles (FileInfo) returns (FileInfo) {}
+    rpc DeleteFile (FileInfo) returns (FileInfo) {}
+}

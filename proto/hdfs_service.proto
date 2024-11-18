@@ -1,0 +1,37 @@
+syntax = "proto3";
+package hdfs_service;
+
+import "google/protobuf/empty.proto";
+
+message BlockInfo {
+    string block_name = 1;
+    optional int64 block_size = 2;
+    optional int64 creat_time = 3;
+    optional string path = 4;
+}
+
+message Block {
+    BlockInfo block_info = 1;
+    bytes content = 2;
+}
+
+message Hello {
+    string message = 1;
+}
+
+enum CommandType {
+    GET = 0;
+    PUT = 1;
+    LIST = 2;
+    DELETE = 3;
+}
+
+message Command {
+    CommandType command = 1;
+    Block block = 2;
+}
+
+service HdfsService {
+    rpc HeartBeat (Hello) returns (Hello) {}
+    rpc GetCommand (google.protobuf.Empty) returns (stream Command) {}
+}
