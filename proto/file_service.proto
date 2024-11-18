@@ -1,6 +1,8 @@
 syntax = "proto3";
-
 package file_service;
+
+import "google/protobuf/empty.proto";
+
 
 message FileInfo {
     string file_name = 1;
@@ -22,9 +24,18 @@ message File{
     bytes content = 2;
 }
 
+message DoubleFile{
+    FileInfo src = 1;
+    FileInfo dest = 2;
+}
+
 service FileService {
     rpc GetFile (FileInfo) returns (File) {}
     rpc PutFile (File) returns (FileInfo) {}
-    rpc ListFiles (FileInfo) returns (FileInfo) {}
     rpc DeleteFile (FileInfo) returns (FileInfo) {}
+    rpc ListFiles (FileInfo) returns (FileInfo) {}
+    rpc CreateDir (FileInfo) returns (google.protobuf.Empty) {}
+    rpc GetFileInfo (FileInfo) returns (FileInfo) {}
+    rpc CopyFile (DoubleFile) returns (google.protobuf.Empty) {}
+    rpc MoveFile (DoubleFile) returns (google.protobuf.Empty) {}
 }

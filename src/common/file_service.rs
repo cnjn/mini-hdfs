@@ -2,7 +2,7 @@ mod inner {
     tonic::include_proto!("file_service");
 }
 
-pub use inner::{FileInfo, File};
+pub use inner::{FileInfo, File, DoubleFile};
 impl FileInfo {
     pub fn new(file_name: String, is_dir: bool) -> Self {
         FileInfo {
